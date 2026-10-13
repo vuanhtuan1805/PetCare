@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'core/supabase/supabase_config.dart';
+import 'features/auth/presentation/auth_gate.dart';
 import 'features/pet/data/pet_repository.dart';
-import 'features/pet/presentation/home_view.dart';
 import 'features/pet/presentation/home_view_model.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: '.env');
+  await Supabase.initialize(
+    url: SupabaseConfig.url,
+    publishableKey: SupabaseConfig.publishableKey,
+  );
+
   final viewModel = HomeViewModel(repository: PetRepository());
   runApp(PetCareApp(viewModel: viewModel));
 }
@@ -22,7 +32,7 @@ class PetCareApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         useMaterial3: true,
       ),
-      home: HomeView(viewModel: viewModel),
+      home: AuthGate(viewModel: viewModel),
     );
   }
 }

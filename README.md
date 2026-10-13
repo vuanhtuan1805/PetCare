@@ -1,5 +1,17 @@
 # petcare
 
+## Supabase setup
+
+Create a Supabase project and enable Email auth. Copy `.env.example` to `.env`,
+then fill in the project URL and publishable key:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+The app shows the email/password auth screen until a user is signed in. Email
+confirmation behavior is controlled by the Supabase project's Auth settings.
+
 A new Flutter project.
 
 ## Getting Started
